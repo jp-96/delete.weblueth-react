@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "yarn: build",
+            "label": "package: yarn build",
             "type": "shell",
             "command": "yarn",
             "args": [
@@ -17,7 +17,7 @@
             },
         },
         {
-            "label": "yarn: install",
+            "label": "package: yarn install",
             "type": "shell",
             "command": "yarn",
             "args": [
@@ -29,7 +29,7 @@
             "problemMatcher": [],
         },
         {
-            "label": "example: build",
+            "label": "example: yarn build-example",
             "type": "shell",
             "command": "yarn",
             "args": [
