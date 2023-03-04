@@ -29,6 +29,18 @@
             "problemMatcher": [],
         },
         {
+            "label": "sample: build",
+            "type": "shell",
+            "command": "yarn",
+            "args": [
+                "build",
+            ],
+            "options": {
+              "cwd": "${workspaceFolder}/example"
+            },
+            "problemMatcher": [],
+        },
+        {
             "label": "example: build",
             "type": "shell",
             "command": "yarn",
