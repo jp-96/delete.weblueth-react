@@ -14,14 +14,12 @@
     "@types/jest": "^29.4.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "@xstate/react": "^3.2.1",
     "microbit-web-bluetooth": "^0.6.0",
     "parcel": "^2.8.3",
     "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "weblueth-react": "https://github.com/jp-96/weblueth-react.git",
-    "xstate": "^4.37.0"
+    "weblueth-react": "https://github.com/jp-96/weblueth-react.git"
   }
 }
