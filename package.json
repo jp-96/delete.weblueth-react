@@ -1,5 +1,5 @@
 {
-  "name": "vscode-react-typescript-package",
+  "name": "weblueth-react",
   "version": "0.1.0",
   "description": "My first react typescript package",
   "main": "./dist/cjs/index.js",
@@ -7,7 +7,7 @@
   "types": "./dist/esm/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jp-96/vscode-react-typescript-package.git"
+    "url": "git+https://github.com/jp-96/weblueth-react.git"
   },
   "scripts": {
     "build": "yarn build:esm && yarn build:cjs",
@@ -36,8 +36,11 @@
   "license": "MIT",
   "devDependencies": {
     "@types/react": "^18.0.28",
+    "@xstate/react": "^3.2.1",
+    "microbit-web-bluetooth": "^0.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "xstate": "^4.37.0"
   }
 }
