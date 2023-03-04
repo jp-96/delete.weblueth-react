@@ -15,15 +15,25 @@
             ],
         },
         {
-            "command": "yarn start",
+            "command": "yarn start-example",
             "name": "Start example",
             "request": "launch",
             "type": "node-terminal",
             "resolveSourceMapLocations": [
-                "${workspaceFolder}/example/**",
+                "${workspaceFolder}/**",
                 "!**/node_modules/**",
             ],
-            "cwd": "${workspaceFolder}/example",
+        },
+        {
+            "command": "yarn start",
+            "name": "Start example2",
+            "request": "launch",
+            "type": "node-terminal",
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/example2/**",
+                "!**/node_modules/**",
+            ],
+            "cwd": "${workspaceFolder}/example2",
         },
     ]
 }

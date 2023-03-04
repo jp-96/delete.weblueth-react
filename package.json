@@ -10,10 +10,9 @@
     "url": "git+https://github.com/jp-96/weblueth-react.git"
   },
   "targets": {
-    "sample": {
-      "source": "sample/index.html",
-      "isLibrary": false,
-      "distDir": "./.build"
+    "example": {
+      "source": "example/index.html",
+      "isLibrary": false
     }
   },
   "scripts": {
@@ -25,11 +24,12 @@
     "test": "jest --config jestconfig.json",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run prettier && npm run lint",
-    "build-sample": "npx parcel build --no-cache --no-source-maps --target sample"
+    "start-example": "npx parcel --no-cache --target example",
+    "build-example": "npx parcel build --no-cache --no-source-maps --target example"
   },
   "peerDependencies": {
-    "react": ">=16",
     "microbit-web-bluetooth": "^0.6.0",
+    "react": ">=16",
     "xstate": "^4.37.0"
   },
   "files": [
@@ -48,6 +48,7 @@
     "@types/react": "^18.0.28",
     "@xstate/react": "^3.2.1",
     "microbit-web-bluetooth": "^0.6.0",
+    "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tslib": "^2.5.0",
