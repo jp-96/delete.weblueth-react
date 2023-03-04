@@ -21,7 +21,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "vscode-react-typescript-package": "https://github.com/jp-96/vscode-react-typescript-package.git",
     "weblueth-react": "https://github.com/jp-96/weblueth-react.git",
     "xstate": "^4.37.0"
   }
