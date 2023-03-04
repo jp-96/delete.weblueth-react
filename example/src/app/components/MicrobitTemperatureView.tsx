@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MicrobitTemperature, BoundCallback, CustomEventCallback } from 'vscode-react-typescript-package';
+import { MicrobitTemperature, BoundCallback, CustomEventCallback } from 'weblueth-react';
 import { TemperatureService } from 'microbit-web-bluetooth/types/services/temperature';
 
 type Props = {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BoundCallback, MicrobitDevice } from 'vscode-react-typescript-package';
+import { BoundCallback, MicrobitDevice } from 'weblueth-react';
 
 type Props = {
     infoName: 'id' | 'name';

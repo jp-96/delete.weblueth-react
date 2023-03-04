@@ -5,7 +5,7 @@ import {
   MicrobitAccelerometer,
   ServicesEffector,
   useMicrobitActor
-} from 'vscode-react-typescript-package';
+} from 'weblueth-react';
 import MicroBitInfo from './MicrobitInfo';
 import MicrobitButtonState from './MicrobitButtonState';
 import { Services } from 'microbit-web-bluetooth';
