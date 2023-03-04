@@ -28,5 +28,32 @@
             ],
             "problemMatcher": [],
         },
+        {
+            "label": "example: build",
+            "type": "shell",
+            "command": "yarn",
+            "args": [
+                "build",
+            ],
+            "options": {
+              "cwd": "${workspaceFolder}/example"
+            },
+            "problemMatcher": [],
+        },
+        {
+            "label": "example: install",
+            "type": "shell",
+            "command": "yarn",
+            "args": [
+                "install",
+                "--immutable",
+                "--immutable-cache",
+                "--check-cache",
+            ],
+            "options": {
+              "cwd": "${workspaceFolder}/example"
+            },
+            "problemMatcher": [],
+        },
     ]
 }

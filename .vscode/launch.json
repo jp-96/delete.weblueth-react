@@ -16,13 +16,14 @@
         },
         {
             "command": "yarn start",
-            "name": "Start",
+            "name": "Start example",
             "request": "launch",
             "type": "node-terminal",
             "resolveSourceMapLocations": [
-                "${workspaceFolder}/**",
+                "${workspaceFolder}/example/**",
                 "!**/node_modules/**",
             ],
+            "cwd": "${workspaceFolder}/example",
         },
     ]
 }
