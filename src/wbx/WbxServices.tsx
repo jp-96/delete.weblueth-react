@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { BoundCallback, CustomServices } from '../wb/WbContext';
-import { ServicesEffector, useMicrobitActor } from './WbxContext';
+import { WbxServicesEffector, useWbxActor } from './WbxContext';
 
 interface Props {
     //children?: any;
@@ -8,14 +8,14 @@ interface Props {
 }
 
 export function MicrobitServices(props: Props) {
-    const [state] = useMicrobitActor();
+    const [state] = useWbxActor();
 
     const cb = useCallback<BoundCallback<CustomServices>>((bound) => {
         if (props.onServicesBound) {
             props.onServicesBound(bound);
         }
     }, []);
-    useEffect(ServicesEffector(state, cb), []);
+    useEffect(WbxServicesEffector(state, cb), []);
 
     return (
         <React.Fragment />

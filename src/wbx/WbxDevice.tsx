@@ -1,21 +1,21 @@
 import React, { useCallback, useEffect } from 'react';
 import { BoundCallback } from '../wb/WbContext';
-import { DeviceEffector, useMicrobitActor } from './WbxContext';
+import { WbxDeviceEffector, useWbxActor } from './WbxContext';
 
 interface Props {
     //children?: any;
     onDeviceBound?: BoundCallback<BluetoothDevice>;
 }
 
-export function MicrobitDevice(props: Props) {
-    const [state] = useMicrobitActor();
+export function WbxDevice(props: Props) {
+    const [state] = useWbxActor();
 
     const cb = useCallback<BoundCallback<BluetoothDevice>>((bound) => {
         if (props.onDeviceBound) {
             props.onDeviceBound(bound);
         }
     }, []);
-    useEffect(DeviceEffector(state, cb), []);
+    useEffect(WbxDeviceEffector(state, cb), []);
 
     return (
         <React.Fragment />

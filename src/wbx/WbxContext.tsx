@@ -4,10 +4,10 @@ import { createActorContext } from '@xstate/react'; // yarn add --dev @xstate/re
 import { createContext, machineWithoutContext } from '../wb/WbMachine';
 import { Connection, Context, BoundCallback, GetServices, RequestDevice, CustomServices } from '../wb/WbContext';
 
-const MicrobitActorContext = createActorContext(machineWithoutContext);
+const WbxActorContext = createActorContext(machineWithoutContext);
 
-export const useMicrobitActor = () => MicrobitActorContext.useActor();
-export const useMicrobitActorRef = () => MicrobitActorContext.useActorRef();
+export const useWbxActor = () => WbxActorContext.useActor();
+export const useWbxActorRef = () => WbxActorContext.useActorRef();
 
 type Props = {
     children: any;
@@ -16,12 +16,12 @@ type Props = {
     connectionName?: string;
 }
 
-export function MicrobitContextProvider(props: Props) {
+export function WbxContextProvider(props: Props) {
     const context = createContext(new Connection(props.getServices, props.requestDevice, window.navigator.bluetooth, props.connectionName));
     return (
-        <MicrobitActorContext.Provider machine={() => machineWithoutContext.withContext(context)}>
+        <WbxActorContext.Provider machine={() => machineWithoutContext.withContext(context)}>
             {props.children}
-        </MicrobitActorContext.Provider>
+        </WbxActorContext.Provider>
     );
 }
 
@@ -30,11 +30,11 @@ export function MicrobitContextProvider(props: Props) {
 type StateWithContext = State<Context, any, any, any, any>;
 type ConnectionContainer = StateWithContext | Context | Connection
 
-export function RefConnection(cc: ConnectionContainer): Connection {
-    if (cc as StateWithContext) {
+export function WbxRefConnection(cc: ConnectionContainer): Connection {
+    if ((cc as StateWithContext).context.conn) {
         return (cc as StateWithContext).context.conn;
     }
-    if (cc as Context) {
+    if ((cc as Context).conn) {
         return (cc as Context).conn;
     }
     if (cc as Connection) {
@@ -43,7 +43,7 @@ export function RefConnection(cc: ConnectionContainer): Connection {
     return undefined!;
 }
 
-export function DeviceEffector(cc: ConnectionContainer, cb: BoundCallback<BluetoothDevice>): EffectCallback {
+export function WbxDeviceEffector(cc: ConnectionContainer, cb: BoundCallback<BluetoothDevice>): EffectCallback {
     return () => {
         /**
          * NOTE:
@@ -53,7 +53,7 @@ export function DeviceEffector(cc: ConnectionContainer, cb: BoundCallback<Blueto
          */
 
         //console.log("DeviceEffector init:", cb)
-        const conn = RefConnection(cc);
+        const conn = WbxRefConnection(cc);
         conn.addDeviceBoundCallback(cb);
         return () => {
             //console.log("DeviceEffector deinit:", cb)
@@ -62,7 +62,7 @@ export function DeviceEffector(cc: ConnectionContainer, cb: BoundCallback<Blueto
     }
 }
 
-export function ServicesEffector(cc: ConnectionContainer, cb: BoundCallback<CustomServices>): EffectCallback {
+export function WbxServicesEffector(cc: ConnectionContainer, cb: BoundCallback<CustomServices>): EffectCallback {
     return () => {
         /**
          * NOTE:
@@ -72,7 +72,7 @@ export function ServicesEffector(cc: ConnectionContainer, cb: BoundCallback<Cust
          */
 
         //console.log("ServicesEffector init:", cb)
-        const conn = RefConnection(cc);
+        const conn = WbxRefConnection(cc);
         conn.addServicesBoundCallback(cb);
         return () => {
             //console.log("ServicesEffector deinit:", cb)
