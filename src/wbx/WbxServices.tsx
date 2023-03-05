@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect } from 'react';
-import { WbBoundCallback, WbServices } from '../wb/WbContext';
+import { WbBoundCallback, WbCustomServices } from '../wb/WbContext';
 import { WbxServicesEffector, useWbxActor } from './WbxContext';
 
 interface Props {
     //children?: any;
-    onServicesBound?: WbBoundCallback<WbServices>;
+    onServicesBound?: WbBoundCallback<WbCustomServices>;
 }
 
 export function WbxServices(props: Props) {
     const [state] = useWbxActor();
 
-    const cb = useCallback<WbBoundCallback<WbServices>>((bound) => {
+    const cb = useCallback<WbBoundCallback<WbCustomServices>>((bound) => {
         if (props.onServicesBound) {
             props.onServicesBound(bound);
         }

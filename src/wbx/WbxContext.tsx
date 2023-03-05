@@ -2,7 +2,7 @@ import React, { EffectCallback } from 'react';
 import { State } from 'xstate'; // yarn add --dev xstate
 import { createActorContext } from '@xstate/react'; // yarn add --dev @xstate/react
 import { createContext, machineWithoutContext } from '../wb/WbMachine';
-import { Connection, Context, WbBoundCallback, GetServices, RequestDevice, WbServices } from '../wb/WbContext';
+import { Connection, Context, WbBoundCallback, GetServices, RequestDevice, WbCustomServices } from '../wb/WbContext';
 
 const WbxActorContext = createActorContext(machineWithoutContext);
 
@@ -64,7 +64,7 @@ export function WbxDeviceEffector(cc: ConnectionContainer, cb: WbBoundCallback<B
     }
 }
 
-export function WbxServicesEffector(cc: ConnectionContainer, cb: WbBoundCallback<WbServices>): EffectCallback {
+export function WbxServicesEffector(cc: ConnectionContainer, cb: WbBoundCallback<WbCustomServices>): EffectCallback {
     return () => {
         /**
          * NOTE:

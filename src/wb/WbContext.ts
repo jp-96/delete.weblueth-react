@@ -1,7 +1,7 @@
-export type WbServices = Object;
+export type WbCustomServices = Object;
 
 export type RequestDevice = (bluetooth: Bluetooth) => Promise<BluetoothDevice | undefined>;
-export type GetServices = (device: BluetoothDevice) => Promise<WbServices>;
+export type GetServices = (device: BluetoothDevice) => Promise<WbCustomServices>;
 export type GattServerDisconnectedCallback = () => void;
 
 const defalutGattServerDisconnectedCallback: GattServerDisconnectedCallback = () => {
@@ -30,8 +30,8 @@ export class Connection {
     private deviceCallbacks: WbBoundCallback<BluetoothDevice>[] = [];
     private device?: BluetoothDevice;
 
-    private servicesCallbacks: WbBoundCallback<WbServices>[] = [];
-    private services?: WbServices;
+    private servicesCallbacks: WbBoundCallback<WbCustomServices>[] = [];
+    private services?: WbCustomServices;
 
     public setGattServerDisconnectedCallback(cb?: GattServerDisconnectedCallback) {
         this.gattServerDisconnectedEventCallback = cb ?? defalutGattServerDisconnectedCallback;
@@ -109,14 +109,14 @@ export class Connection {
         this.updateDeviceBoundCallbacksAll(true); // bind all
     }
 
-    public addServicesBoundCallback(cb: WbBoundCallback<WbServices>) {
+    public addServicesBoundCallback(cb: WbBoundCallback<WbCustomServices>) {
         this.servicesCallbacks.push(cb);
         if (this.services) {
             cb({ target: this.services, binding: true }); //bind
         }
     }
 
-    public removeServicesBoundCallback(cb: WbBoundCallback<WbServices>) {
+    public removeServicesBoundCallback(cb: WbBoundCallback<WbCustomServices>) {
         this.servicesCallbacks = this.servicesCallbacks.filter(f => {
             if (f === cb) {
                 if (this.services) {
@@ -131,13 +131,13 @@ export class Connection {
     private updateServicesBoundCallbacksAll(binding: boolean) {
         const target = this.services;
         if (target) {
-            const bound: Bound<WbServices> = { target, binding };
+            const bound: Bound<WbCustomServices> = { target, binding };
             this.servicesCallbacks.forEach(f => f(bound));
         }
         return false;
     }
 
-    private setServices(services?: WbServices) {
+    private setServices(services?: WbCustomServices) {
         this.updateServicesBoundCallbacksAll(false); // unbind all
         this.services = services; // change
         this.updateServicesBoundCallbacksAll(true); // bind all
