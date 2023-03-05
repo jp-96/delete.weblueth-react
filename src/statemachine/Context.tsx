@@ -1,5 +1,7 @@
-import { getServices, requestMicrobit, Services } from "microbit-web-bluetooth";
+export type CustomServices = Object;
 
+export type RequestDevice = (bluetooth: Bluetooth) => Promise<BluetoothDevice | undefined>;
+export type GetServices = (device: BluetoothDevice) => Promise<CustomServices>;
 export type GattServerDisconnectedCallback = () => void;
 
 const defalutGattServerDisconnectedCallback: GattServerDisconnectedCallback = () => {
@@ -11,28 +13,32 @@ export type BoundCallback<T> = (bound: Bound<T>) => void;
 
 export class Connection {
 
-    constructor(bluetooth: Bluetooth = window.navigator.bluetooth, name: string = "micro:bit") {
-        this.bluetooth = bluetooth;
+    constructor(getServices: GetServices, requestDevice: RequestDevice, bluetooth: Bluetooth = window.navigator.bluetooth, name: string = "micro:bit") {
         this.name = name;
+        this.bluetooth = bluetooth;
+        this.asyncRequestDevice = requestDevice;
+        this.asyncGetServices = getServices;
     }
 
-    private bluetooth: Bluetooth;
     public name: string;
+    private bluetooth: Bluetooth;
+    private asyncRequestDevice: RequestDevice;
+    private asyncGetServices: GetServices;
 
     private gattServerDisconnectedEventCallback: GattServerDisconnectedCallback = defalutGattServerDisconnectedCallback;
 
     private deviceCallbacks: BoundCallback<BluetoothDevice>[] = [];
     private device?: BluetoothDevice;
 
-    private servicesCallbacks: BoundCallback<Services>[] = [];
-    private services?: Services;
+    private servicesCallbacks: BoundCallback<CustomServices>[] = [];
+    private services?: CustomServices;
 
     public setGattServerDisconnectedCallback(cb?: GattServerDisconnectedCallback) {
         this.gattServerDisconnectedEventCallback = cb ?? defalutGattServerDisconnectedCallback;
     }
 
     public async requestDevice() {
-        const device = await requestMicrobit(this.bluetooth);
+        const device = await this.asyncRequestDevice(this.bluetooth);
         this.setDevice(device);
     }
 
@@ -42,7 +48,7 @@ export class Connection {
     }
 
     public async getServices() {
-        const services = await getServices(this.device!);
+        const services = await this.asyncGetServices(this.device!);
         this.setServices(services);
     }
 
@@ -103,14 +109,14 @@ export class Connection {
         this.updateDeviceBoundCallbacksAll(true); // bind all
     }
 
-    public addServicesBoundCallback(cb: BoundCallback<Services>) {
+    public addServicesBoundCallback(cb: BoundCallback<CustomServices>) {
         this.servicesCallbacks.push(cb);
         if (this.services) {
             cb({ target: this.services, binding: true }); //bind
         }
     }
 
-    public removeServicesBoundCallback(cb: BoundCallback<Services>) {
+    public removeServicesBoundCallback(cb: BoundCallback<CustomServices>) {
         this.servicesCallbacks = this.servicesCallbacks.filter(f => {
             if (f === cb) {
                 if (this.services) {
@@ -125,13 +131,13 @@ export class Connection {
     private updateServicesBoundCallbacksAll(binding: boolean) {
         const target = this.services;
         if (target) {
-            const bound: Bound<Services> = { target, binding };
+            const bound: Bound<CustomServices> = { target, binding };
             this.servicesCallbacks.forEach(f => f(bound));
         }
         return false;
     }
 
-    private setServices(services?: Services) {
+    private setServices(services?: CustomServices) {
         this.updateServicesBoundCallbacksAll(false); // unbind all
         this.services = services; // change
         this.updateServicesBoundCallbacksAll(true); // bind all
