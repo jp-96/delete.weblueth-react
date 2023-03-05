@@ -1,12 +1,12 @@
 import { assign, createMachine, DoneInvokeEvent } from "xstate"; // yarn add --dev xstate
-import { Connection, Context, DisconnectedReason, RejectedReason } from "./WbContext";
+import { WbConnection, WbContext, WbDisconnectedReason, WbRejectedReason } from "./WbContext";
 
-const rejectedReason: RejectedReason = { type: "NONE", message: "" };
-const disconnectedReason: DisconnectedReason = { type: "NONE", message: "" };
+const rejectedReason: WbRejectedReason = { type: "NONE", message: "" };
+const disconnectedReason: WbDisconnectedReason = { type: "NONE", message: "" };
 
-export const createContext = (conn: Connection) => ({ conn, rejectedReason, disconnectedReason });
+export const createWbContext = (conn: WbConnection) => ({ conn, rejectedReason, disconnectedReason });
 
-export const machineWithoutContext = createMachine<Context>(
+export const machineWithoutContext = createMachine<WbContext>(
   // config
   {
     predictableActionArguments: true, // see: https://xstate.js.org/docs/guides/actions.html#actions

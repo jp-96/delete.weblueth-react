@@ -1,8 +1,8 @@
 import React, { EffectCallback } from 'react';
 import { State } from 'xstate'; // yarn add --dev xstate
 import { createActorContext } from '@xstate/react'; // yarn add --dev @xstate/react
-import { createContext, machineWithoutContext } from '../wb/WbMachine';
-import { Connection, Context, WbBoundCallback, GetServices, RequestDevice, WbCustomServices } from '../wb/WbContext';
+import { createWbContext, machineWithoutContext } from '../wb/WbMachine';
+import { WbConnection, WbContext, WbBoundCallback, GetServices, RequestDevice, WbCustomServices } from '../wb/WbContext';
 
 const WbxActorContext = createActorContext(machineWithoutContext);
 
@@ -19,7 +19,7 @@ type Props = {
 
 export function WbxContextProvider(props: Props) {
     const bluetooth = props.bluetooth ?? window.navigator.bluetooth;
-    const context = createContext(new Connection(props.getServices, props.requestDevice, bluetooth, props.connectionName));
+    const context = createWbContext(new WbConnection(props.getServices, props.requestDevice, bluetooth, props.connectionName));
     return (
         <WbxActorContext.Provider machine={() => machineWithoutContext.withContext(context)}>
             {props.children}
@@ -29,18 +29,18 @@ export function WbxContextProvider(props: Props) {
 
 // helper
 
-type StateWithContext = State<Context, any, any, any, any>;
-type ConnectionContainer = StateWithContext | Context | Connection
+type StateWithContext = State<WbContext, any, any, any, any>;
+type ConnectionContainer = StateWithContext | WbContext | WbConnection
 
-export function WbxRefConnection(cc: ConnectionContainer): Connection {
+export function WbxRefConnection(cc: ConnectionContainer): WbConnection {
     if ((cc as StateWithContext).context.conn) {
         return (cc as StateWithContext).context.conn;
     }
-    if ((cc as Context).conn) {
-        return (cc as Context).conn;
+    if ((cc as WbContext).conn) {
+        return (cc as WbContext).conn;
     }
-    if (cc as Connection) {
-        return (cc as Connection);
+    if (cc as WbConnection) {
+        return (cc as WbConnection);
     }
     return undefined!;
 }

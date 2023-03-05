@@ -11,7 +11,7 @@ const defalutGattServerDisconnectedCallback: GattServerDisconnectedCallback = ()
 type Bound<T> = { target: T, binding: boolean };
 export type WbBoundCallback<T> = (bound: Bound<T>) => void;
 
-export class Connection {
+export class WbConnection {
 
     constructor(getServices: GetServices, requestDevice: RequestDevice, bluetooth: Bluetooth, name: string = "") {
         this.name = name;
@@ -155,11 +155,11 @@ export class Connection {
 
 type Reason<T> = { type: T, message: string; };
 
-export type RejectedReason = Reason<"NONE" | "ERROR">;
-export type DisconnectedReason = Reason<"NONE" | "ERROR" | "DELAYED" | "PERIPHERAL" | "CENTRAL">;
+export type WbRejectedReason = Reason<"NONE" | "ERROR">;
+export type WbDisconnectedReason = Reason<"NONE" | "ERROR" | "DELAYED" | "PERIPHERAL" | "CENTRAL">;
 
-export type Context = {
-    conn: Connection;
-    rejectedReason: RejectedReason;
-    disconnectedReason: DisconnectedReason;
+export type WbContext = {
+    conn: WbConnection;
+    rejectedReason: WbRejectedReason;
+    disconnectedReason: WbDisconnectedReason;
 };
