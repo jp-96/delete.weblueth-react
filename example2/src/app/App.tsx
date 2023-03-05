@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import Logo from './Logo';  // logo.svg ==> Log0.tsx
 //import './App.css'; // ==> ../index.html
-import MicrobitContextProvider from 'weblueth-react';
+import { MicrobitContextProvider } from 'weblueth-react';
 import Microbit from './components/Microbit';
 
 function App() {
