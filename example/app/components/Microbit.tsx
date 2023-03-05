@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import {
   WbxCustomEventCallback,
-  WbxBoundCallback,
+  WbBoundCallback,
   MicrobitAccelerometer,
   WbxServicesEffector,
   useWbxActor
@@ -20,7 +20,7 @@ function Microbit() {
   const [services, setServices] = useState<Services>({});
   const [frequency, setFrequency] = useState<AccelerometerPeriod>(20);
 
-  const cb = useCallback<WbxBoundCallback<Services>>((bound) => {
+  const cb = useCallback<WbBoundCallback<Services>>((bound) => {
 
     const listenerButtonA = (event: any) => {
       console.log("Button A:", `${event.type}`, `${event.detail}`);
