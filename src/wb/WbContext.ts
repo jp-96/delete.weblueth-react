@@ -1,5 +1,7 @@
-import { getServices, requestMicrobit, Services } from "microbit-web-bluetooth";
+export type WbCustomServices = Object;
 
+export type RequestDevice = (bluetooth: Bluetooth) => Promise<BluetoothDevice | undefined>;
+export type GetServices = (device: BluetoothDevice) => Promise<WbCustomServices>;
 export type GattServerDisconnectedCallback = () => void;
 
 const defalutGattServerDisconnectedCallback: GattServerDisconnectedCallback = () => {
@@ -7,32 +9,36 @@ const defalutGattServerDisconnectedCallback: GattServerDisconnectedCallback = ()
 };
 
 type Bound<T> = { target: T, binding: boolean };
-export type BoundCallback<T> = (bound: Bound<T>) => void;
+export type WbBoundCallback<T> = (bound: Bound<T>) => void;
 
-export class Connection {
+export class WbConnection {
 
-    constructor(bluetooth: Bluetooth = window.navigator.bluetooth, name: string = "micro:bit") {
-        this.bluetooth = bluetooth;
+    constructor(getServices: GetServices, requestDevice: RequestDevice, bluetooth: Bluetooth, name: string = "") {
         this.name = name;
+        this.bluetooth = bluetooth;
+        this.asyncRequestDevice = requestDevice;
+        this.asyncGetServices = getServices;
     }
 
-    private bluetooth: Bluetooth;
     public name: string;
+    private bluetooth: Bluetooth;
+    private asyncRequestDevice: RequestDevice;
+    private asyncGetServices: GetServices;
 
     private gattServerDisconnectedEventCallback: GattServerDisconnectedCallback = defalutGattServerDisconnectedCallback;
 
-    private deviceCallbacks: BoundCallback<BluetoothDevice>[] = [];
+    private deviceCallbacks: WbBoundCallback<BluetoothDevice>[] = [];
     private device?: BluetoothDevice;
 
-    private servicesCallbacks: BoundCallback<Services>[] = [];
-    private services?: Services;
+    private servicesCallbacks: WbBoundCallback<WbCustomServices>[] = [];
+    private services?: WbCustomServices;
 
     public setGattServerDisconnectedCallback(cb?: GattServerDisconnectedCallback) {
         this.gattServerDisconnectedEventCallback = cb ?? defalutGattServerDisconnectedCallback;
     }
 
     public async requestDevice() {
-        const device = await requestMicrobit(this.bluetooth);
+        const device = await this.asyncRequestDevice(this.bluetooth);
         this.setDevice(device);
     }
 
@@ -42,7 +48,7 @@ export class Connection {
     }
 
     public async getServices() {
-        const services = await getServices(this.device!);
+        const services = await this.asyncGetServices(this.device!);
         this.setServices(services);
     }
 
@@ -61,14 +67,14 @@ export class Connection {
         }
     }
 
-    public addDeviceBoundCallback(cb: BoundCallback<BluetoothDevice>) {
+    public addDeviceBoundCallback(cb: WbBoundCallback<BluetoothDevice>) {
         this.deviceCallbacks.push(cb);
         if (this.device) {
             cb({ target: this.device, binding: true }); // bind
         }
     }
 
-    public removeDeviceBoundCallback(cb: BoundCallback<BluetoothDevice>) {
+    public removeDeviceBoundCallback(cb: WbBoundCallback<BluetoothDevice>) {
         this.deviceCallbacks = this.deviceCallbacks.filter(f => {
             if (f === cb) {
                 if (this.device) {
@@ -103,14 +109,14 @@ export class Connection {
         this.updateDeviceBoundCallbacksAll(true); // bind all
     }
 
-    public addServicesBoundCallback(cb: BoundCallback<Services>) {
+    public addServicesBoundCallback(cb: WbBoundCallback<WbCustomServices>) {
         this.servicesCallbacks.push(cb);
         if (this.services) {
             cb({ target: this.services, binding: true }); //bind
         }
     }
 
-    public removeServicesBoundCallback(cb: BoundCallback<Services>) {
+    public removeServicesBoundCallback(cb: WbBoundCallback<WbCustomServices>) {
         this.servicesCallbacks = this.servicesCallbacks.filter(f => {
             if (f === cb) {
                 if (this.services) {
@@ -125,13 +131,13 @@ export class Connection {
     private updateServicesBoundCallbacksAll(binding: boolean) {
         const target = this.services;
         if (target) {
-            const bound: Bound<Services> = { target, binding };
+            const bound: Bound<WbCustomServices> = { target, binding };
             this.servicesCallbacks.forEach(f => f(bound));
         }
         return false;
     }
 
-    private setServices(services?: Services) {
+    private setServices(services?: WbCustomServices) {
         this.updateServicesBoundCallbacksAll(false); // unbind all
         this.services = services; // change
         this.updateServicesBoundCallbacksAll(true); // bind all
@@ -149,11 +155,11 @@ export class Connection {
 
 type Reason<T> = { type: T, message: string; };
 
-export type RejectedReason = Reason<"NONE" | "ERROR">;
-export type DisconnectedReason = Reason<"NONE" | "ERROR" | "DELAYED" | "PERIPHERAL" | "CENTRAL">;
+export type WbRejectedReason = Reason<"NONE" | "ERROR">;
+export type WbDisconnectedReason = Reason<"NONE" | "ERROR" | "DELAYED" | "PERIPHERAL" | "CENTRAL">;
 
-export type Context = {
-    conn: Connection;
-    rejectedReason: RejectedReason;
-    disconnectedReason: DisconnectedReason;
+export type WbContext = {
+    conn: WbConnection;
+    rejectedReason: WbRejectedReason;
+    disconnectedReason: WbDisconnectedReason;
 };

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { CustomEventCallback, ServiceProps } from '../context/MicrobitContext';
-import { BoundCallback } from '../statemachine/Context';
-import { MicrobitServices } from '../context/MicroBitServices';
+import { WbxCustomEventCallback, WbxServiceProps } from '../wbx/WbxContext';
+import { WbBoundCallback } from '../wb/WbContext';
+import { WbxServices } from '../wbx/WbxServices';
 import { UartService } from 'microbit-web-bluetooth/types/services/uart';
 import { Services } from 'microbit-web-bluetooth';
 
-interface Props extends ServiceProps<UartService> {
+interface Props extends WbxServiceProps<UartService> {
 }
 
 export function MicrobitUart(props: Props) {
     
-    const onServicesBound: BoundCallback<Services> = bound => {
+    const onServicesBound: WbBoundCallback<Services> = bound => {
         const target = bound.target.uartService;
         if (target) {
             if (props.onServiceBound) {
@@ -20,6 +20,6 @@ export function MicrobitUart(props: Props) {
     };
 
     return (
-        <MicrobitServices onServicesBound={onServicesBound} />
+        <WbxServices onServicesBound={onServicesBound} />
     );
 }
