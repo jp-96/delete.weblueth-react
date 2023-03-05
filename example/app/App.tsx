@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import Logo from './Logo';  // logo.svg ==> Log0.tsx
+//import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React from 'react';
+//import Logo from './Logo';  // logo.svg ==> Log0.tsx
 //import './App.css'; // ==> ../index.html
-import MicrobitContextProvider from '../../src';
+import { MicrobitContextProvider } from '../../src';
 import Microbit from './components/Microbit';
 
 function App() {
@@ -25,12 +26,12 @@ function App() {
         <table>
           <tr>
             <td>
-              <MicrobitContextProvider>
+              <MicrobitContextProvider connectionName={"LEFT"}>
                 <Microbit />
               </MicrobitContextProvider>
             </td>
             <td>
-              <MicrobitContextProvider>
+              <MicrobitContextProvider connectionName={"RIGHT"}>
                 <Microbit />
               </MicrobitContextProvider>
             </td>

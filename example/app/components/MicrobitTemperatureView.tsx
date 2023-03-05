@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MicrobitTemperature, BoundCallback, CustomEventCallback } from '../../../src';
+import { MicrobitTemperature, WbBoundCallback, WbxCustomEventCallback } from '../../../src';
 import { TemperatureService } from 'microbit-web-bluetooth/types/services/temperature';
 
 type Props = {
@@ -8,12 +8,12 @@ type Props = {
 export default function MicrobitTemperatureView(props: Props) {
     const [state, setState] = useState<number | '-'>('-');
 
-    const onTemperatureChanged: CustomEventCallback<number> = event => {
+    const onTemperatureChanged: WbxCustomEventCallback<number> = event => {
         //console.log("onTemperatureChanged:", event.detail);
         setState(event.detail);
     };
 
-    const onServiceBound: BoundCallback<TemperatureService> = async bound => {
+    const onServiceBound: WbBoundCallback<TemperatureService> = async bound => {
         if (bound.binding) {
             const t = await bound.target.readTemperature();
             //console.log("readTemperature:", t);
