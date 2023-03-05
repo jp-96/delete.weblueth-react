@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import Logo from './Logo';  // logo.svg ==> Log0.tsx
+//import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React from 'react';
+//import Logo from './Logo';  // logo.svg ==> Log0.tsx
 //import './App.css'; // ==> ../index.html
-import { WbxContextProvider } from '../../src';
+import { MicrobitContextProvider } from '../../src';
 import Microbit from './components/Microbit';
-import { getServices, requestMicrobit } from 'microbit-web-bluetooth';
 
 function App() {
   return (
@@ -26,14 +26,14 @@ function App() {
         <table>
           <tr>
             <td>
-              <WbxContextProvider getServices={getServices} requestDevice={requestMicrobit}>
+              <MicrobitContextProvider connectionName={"LEFT"}>
                 <Microbit />
-              </WbxContextProvider>
+              </MicrobitContextProvider>
             </td>
             <td>
-              <WbxContextProvider getServices={getServices} requestDevice={requestMicrobit}>
+              <MicrobitContextProvider connectionName={"RIGHT"}>
                 <Microbit />
-              </WbxContextProvider>
+              </MicrobitContextProvider>
             </td>
           </tr>
         </table>

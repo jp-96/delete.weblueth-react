@@ -4,6 +4,8 @@ import { WbBoundCallback } from './wb/WbContext';
 import { WbxDevice } from './wbx/WbxDevice';
 import { WbxServices } from './wbx/WbxServices';
 
+import {MicrobitContextProvider} from './components/MicrobitContextProvider';
+
 import { MicrobitAccelerometer } from './components/MicrobitAccelerometer';
 import { MicrobitButton } from './components/MicrobitButton';
 import { MicrobitDeviceInformation } from './components/MicrobitDeviceInformation';
@@ -22,6 +24,7 @@ export {
     WbxDevice,
     WbxServices,
 
+    MicrobitContextProvider,
     MicrobitAccelerometer,
     MicrobitButton,
     MicrobitDeviceInformation,

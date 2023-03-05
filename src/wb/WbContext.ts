@@ -13,7 +13,7 @@ export type WbBoundCallback<T> = (bound: Bound<T>) => void;
 
 export class Connection {
 
-    constructor(getServices: GetServices, requestDevice: RequestDevice, bluetooth: Bluetooth = window.navigator.bluetooth, name: string = "micro:bit") {
+    constructor(getServices: GetServices, requestDevice: RequestDevice, bluetooth: Bluetooth, name: string = "") {
         this.name = name;
         this.bluetooth = bluetooth;
         this.asyncRequestDevice = requestDevice;

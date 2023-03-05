@@ -13,11 +13,13 @@ type Props = {
     children: any;
     getServices: GetServices;
     requestDevice: RequestDevice;
+    bluetooth?: Bluetooth;
     connectionName?: string;
 }
 
 export function WbxContextProvider(props: Props) {
-    const context = createContext(new Connection(props.getServices, props.requestDevice, window.navigator.bluetooth, props.connectionName));
+    const bluetooth = props.bluetooth ?? window.navigator.bluetooth;
+    const context = createContext(new Connection(props.getServices, props.requestDevice, bluetooth, props.connectionName));
     return (
         <WbxActorContext.Provider machine={() => machineWithoutContext.withContext(context)}>
             {props.children}
