@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { CustomEventCallback, ServiceProps } from '../wbx/WbxContext';
-import { BoundCallback } from '../wb/WbContext';
-import { MicrobitServices } from '../wbx/WbxServices';
+import { WbxCustomEventCallback, WbxServiceProps } from '../wbx/WbxContext';
+import { WbBoundCallback } from '../wb/WbContext';
+import { WbxServices } from '../wbx/WbxServices';
 import { LedService } from 'microbit-web-bluetooth/types/services/led';
 import { Services } from 'microbit-web-bluetooth';
 
-interface Props extends ServiceProps<LedService> {
+interface Props extends WbxServiceProps<LedService> {
 }
 
 export function MicrobitLed(props: Props) {
     
-    const onServicesBound: BoundCallback<Services> = bound => {
+    const onServicesBound: WbBoundCallback<Services> = bound => {
         const target = bound.target.ledService;
         if (target) {
             if (props.onServiceBound) {
@@ -20,6 +20,6 @@ export function MicrobitLed(props: Props) {
     };
 
     return (
-        <MicrobitServices onServicesBound={onServicesBound} />
+        <WbxServices onServicesBound={onServicesBound} />
     );
 }

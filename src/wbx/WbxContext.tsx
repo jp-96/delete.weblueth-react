@@ -2,7 +2,7 @@ import React, { EffectCallback } from 'react';
 import { State } from 'xstate'; // yarn add --dev xstate
 import { createActorContext } from '@xstate/react'; // yarn add --dev @xstate/react
 import { createContext, machineWithoutContext } from '../wb/WbMachine';
-import { Connection, Context, BoundCallback, GetServices, RequestDevice, CustomServices } from '../wb/WbContext';
+import { Connection, Context, WbBoundCallback, GetServices, RequestDevice, WbServices } from '../wb/WbContext';
 
 const WbxActorContext = createActorContext(machineWithoutContext);
 
@@ -43,7 +43,7 @@ export function WbxRefConnection(cc: ConnectionContainer): Connection {
     return undefined!;
 }
 
-export function WbxDeviceEffector(cc: ConnectionContainer, cb: BoundCallback<BluetoothDevice>): EffectCallback {
+export function WbxDeviceEffector(cc: ConnectionContainer, cb: WbBoundCallback<BluetoothDevice>): EffectCallback {
     return () => {
         /**
          * NOTE:
@@ -62,7 +62,7 @@ export function WbxDeviceEffector(cc: ConnectionContainer, cb: BoundCallback<Blu
     }
 }
 
-export function WbxServicesEffector(cc: ConnectionContainer, cb: BoundCallback<CustomServices>): EffectCallback {
+export function WbxServicesEffector(cc: ConnectionContainer, cb: WbBoundCallback<WbServices>): EffectCallback {
     return () => {
         /**
          * NOTE:
@@ -83,9 +83,9 @@ export function WbxServicesEffector(cc: ConnectionContainer, cb: BoundCallback<C
 
 // type, interface
 
-export type CustomEventCallback<T> = (event: CustomEvent<T>) => void;
+export type WbxCustomEventCallback<T> = (event: CustomEvent<T>) => void;
 
-export interface ServiceProps<T> {
+export interface WbxServiceProps<T> {
     //children?: any;
-    onServiceBound?: BoundCallback<T>;
+    onServiceBound?: WbBoundCallback<T>;
 }

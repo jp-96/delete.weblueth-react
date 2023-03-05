@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BoundCallback, MicrobitDevice } from '../../../src';
+import { WbxBoundCallback, WbxDevice } from '../../../src';
 
 type Props = {
     infoName: 'id' | 'name';
@@ -10,7 +10,7 @@ const defaultInfo = '(none)';
 export default function MicroBitInfo(props: Props) {
     const [info, setInfo] = useState<string>(defaultInfo);
 
-    const onDeviceBound: BoundCallback<BluetoothDevice> = bound => {
+    const onDeviceBound: WbxBoundCallback<BluetoothDevice> = bound => {
         if (bound.binding) {
             setInfo(bound.target[props.infoName] ?? defaultInfo);
         } else {
@@ -19,7 +19,7 @@ export default function MicroBitInfo(props: Props) {
     }
     return (
         <React.Fragment>
-            <MicrobitDevice onDeviceBound={onDeviceBound} />
+            <WbxDevice onDeviceBound={onDeviceBound} />
             {info}
         </React.Fragment>
     );

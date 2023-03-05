@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect } from 'react';
-import { BoundCallback, CustomServices } from '../wb/WbContext';
+import { WbBoundCallback, WbServices } from '../wb/WbContext';
 import { WbxServicesEffector, useWbxActor } from './WbxContext';
 
 interface Props {
     //children?: any;
-    onServicesBound?: BoundCallback<CustomServices>;
+    onServicesBound?: WbBoundCallback<WbServices>;
 }
 
-export function MicrobitServices(props: Props) {
+export function WbxServices(props: Props) {
     const [state] = useWbxActor();
 
-    const cb = useCallback<BoundCallback<CustomServices>>((bound) => {
+    const cb = useCallback<WbBoundCallback<WbServices>>((bound) => {
         if (props.onServicesBound) {
             props.onServicesBound(bound);
         }

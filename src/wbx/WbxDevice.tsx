@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect } from 'react';
-import { BoundCallback } from '../wb/WbContext';
+import { WbBoundCallback } from '../wb/WbContext';
 import { WbxDeviceEffector, useWbxActor } from './WbxContext';
 
 interface Props {
     //children?: any;
-    onDeviceBound?: BoundCallback<BluetoothDevice>;
+    onDeviceBound?: WbBoundCallback<BluetoothDevice>;
 }
 
 export function WbxDevice(props: Props) {
     const [state] = useWbxActor();
 
-    const cb = useCallback<BoundCallback<BluetoothDevice>>((bound) => {
+    const cb = useCallback<WbBoundCallback<BluetoothDevice>>((bound) => {
         if (props.onDeviceBound) {
             props.onDeviceBound(bound);
         }

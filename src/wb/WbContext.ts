@@ -1,7 +1,7 @@
-export type CustomServices = Object;
+export type WbServices = Object;
 
 export type RequestDevice = (bluetooth: Bluetooth) => Promise<BluetoothDevice | undefined>;
-export type GetServices = (device: BluetoothDevice) => Promise<CustomServices>;
+export type GetServices = (device: BluetoothDevice) => Promise<WbServices>;
 export type GattServerDisconnectedCallback = () => void;
 
 const defalutGattServerDisconnectedCallback: GattServerDisconnectedCallback = () => {
@@ -9,7 +9,7 @@ const defalutGattServerDisconnectedCallback: GattServerDisconnectedCallback = ()
 };
 
 type Bound<T> = { target: T, binding: boolean };
-export type BoundCallback<T> = (bound: Bound<T>) => void;
+export type WbBoundCallback<T> = (bound: Bound<T>) => void;
 
 export class Connection {
 
@@ -27,11 +27,11 @@ export class Connection {
 
     private gattServerDisconnectedEventCallback: GattServerDisconnectedCallback = defalutGattServerDisconnectedCallback;
 
-    private deviceCallbacks: BoundCallback<BluetoothDevice>[] = [];
+    private deviceCallbacks: WbBoundCallback<BluetoothDevice>[] = [];
     private device?: BluetoothDevice;
 
-    private servicesCallbacks: BoundCallback<CustomServices>[] = [];
-    private services?: CustomServices;
+    private servicesCallbacks: WbBoundCallback<WbServices>[] = [];
+    private services?: WbServices;
 
     public setGattServerDisconnectedCallback(cb?: GattServerDisconnectedCallback) {
         this.gattServerDisconnectedEventCallback = cb ?? defalutGattServerDisconnectedCallback;
@@ -67,14 +67,14 @@ export class Connection {
         }
     }
 
-    public addDeviceBoundCallback(cb: BoundCallback<BluetoothDevice>) {
+    public addDeviceBoundCallback(cb: WbBoundCallback<BluetoothDevice>) {
         this.deviceCallbacks.push(cb);
         if (this.device) {
             cb({ target: this.device, binding: true }); // bind
         }
     }
 
-    public removeDeviceBoundCallback(cb: BoundCallback<BluetoothDevice>) {
+    public removeDeviceBoundCallback(cb: WbBoundCallback<BluetoothDevice>) {
         this.deviceCallbacks = this.deviceCallbacks.filter(f => {
             if (f === cb) {
                 if (this.device) {
@@ -109,14 +109,14 @@ export class Connection {
         this.updateDeviceBoundCallbacksAll(true); // bind all
     }
 
-    public addServicesBoundCallback(cb: BoundCallback<CustomServices>) {
+    public addServicesBoundCallback(cb: WbBoundCallback<WbServices>) {
         this.servicesCallbacks.push(cb);
         if (this.services) {
             cb({ target: this.services, binding: true }); //bind
         }
     }
 
-    public removeServicesBoundCallback(cb: BoundCallback<CustomServices>) {
+    public removeServicesBoundCallback(cb: WbBoundCallback<WbServices>) {
         this.servicesCallbacks = this.servicesCallbacks.filter(f => {
             if (f === cb) {
                 if (this.services) {
@@ -131,13 +131,13 @@ export class Connection {
     private updateServicesBoundCallbacksAll(binding: boolean) {
         const target = this.services;
         if (target) {
-            const bound: Bound<CustomServices> = { target, binding };
+            const bound: Bound<WbServices> = { target, binding };
             this.servicesCallbacks.forEach(f => f(bound));
         }
         return false;
     }
 
-    private setServices(services?: CustomServices) {
+    private setServices(services?: WbServices) {
         this.updateServicesBoundCallbacksAll(false); // unbind all
         this.services = services; // change
         this.updateServicesBoundCallbacksAll(true); // bind all

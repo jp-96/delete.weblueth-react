@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { CustomEventCallback, ServiceProps } from '../wbx/WbxContext';
-import { BoundCallback } from '../wb/WbContext';
-import { MicrobitServices } from '../wbx/WbxServices';
+import { WbxCustomEventCallback, WbxServiceProps } from '../wbx/WbxContext';
+import { WbBoundCallback } from '../wb/WbContext';
+import { WbxServices } from '../wbx/WbxServices';
 import { MagnetometerService } from 'microbit-web-bluetooth/types/services/magnetometer';
 import { Services } from 'microbit-web-bluetooth';
 
-interface Props extends ServiceProps<MagnetometerService> {
+interface Props extends WbxServiceProps<MagnetometerService> {
 }
 
 export function MicrobitMagnetometer(props: Props) {
     
-    const onServicesBound: BoundCallback<Services> = bound => {
+    const onServicesBound: WbBoundCallback<Services> = bound => {
         const target = bound.target.magnetometerService;
         if (target) {
             if (props.onServiceBound) {
@@ -20,6 +20,6 @@ export function MicrobitMagnetometer(props: Props) {
     };
 
     return (
-        <MicrobitServices onServicesBound={onServicesBound} />
+        <WbxServices onServicesBound={onServicesBound} />
     );
 }

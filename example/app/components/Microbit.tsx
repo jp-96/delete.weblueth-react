@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import {
-  CustomEventCallback,
-  BoundCallback,
+  WbxCustomEventCallback,
+  WbxBoundCallback,
   MicrobitAccelerometer,
-  ServicesEffector,
-  useMicrobitActor
+  WbxServicesEffector,
+  useWbxActor
 } from '../../../src';
 import MicroBitInfo from './MicrobitInfo';
 import MicrobitButtonState from './MicrobitButtonState';
@@ -13,14 +13,14 @@ import { AccelerometerData, AccelerometerPeriod } from 'microbit-web-bluetooth/t
 import MicrobitTemperatureView from './MicrobitTemperatureView';
 
 function Microbit() {
-  const [state, send] = useMicrobitActor();
+  const [state, send] = useWbxActor();
   const [stateA, setStateA] = useState("");
   const [stateB, setStateB] = useState("");
   const [acc, setAcc] = useState({ x: 0, y: 0, z: 0, });
   const [services, setServices] = useState<Services>({});
   const [frequency, setFrequency] = useState<AccelerometerPeriod>(20);
 
-  const cb = useCallback<BoundCallback<Services>>((bound) => {
+  const cb = useCallback<WbxBoundCallback<Services>>((bound) => {
 
     const listenerButtonA = (event: any) => {
       console.log("Button A:", `${event.type}`, `${event.detail}`);
@@ -51,9 +51,9 @@ function Microbit() {
     }
   }, []);
 
-  useEffect(ServicesEffector(state, cb), []);
+  useEffect(WbxServicesEffector(state, cb), []);
 
-  const cbAcc: CustomEventCallback<AccelerometerData> = (event) => {
+  const cbAcc: WbxCustomEventCallback<AccelerometerData> = (event) => {
     setAcc({ x: event.detail.x, y: event.detail.y, z: event.detail.z })
   }
 

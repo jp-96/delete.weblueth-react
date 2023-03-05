@@ -1,8 +1,8 @@
-import { CustomEventCallback, WbxDeviceEffector, WbxContextProvider, WbxServicesEffector, useWbxActor } from './wbx/WbxContext';
-import { BoundCallback } from './wb/WbContext';
+import { WbxContextProvider, WbxCustomEventCallback, WbxDeviceEffector, WbxServicesEffector, useWbxActor } from './wbx/WbxContext';
+import { WbBoundCallback } from './wb/WbContext';
 
 import { WbxDevice } from './wbx/WbxDevice';
-import { MicrobitServices } from './wbx/WbxServices';
+import { WbxServices } from './wbx/WbxServices';
 
 import { MicrobitAccelerometer } from './components/MicrobitAccelerometer';
 import { MicrobitButton } from './components/MicrobitButton';
@@ -16,11 +16,11 @@ import { MicrobitTemperature } from './components/MicrobitTemperature';
 import { MicrobitUart } from './components/MicrobitUart';
 
 export {
-    CustomEventCallback, WbxDeviceEffector as DeviceEffector, WbxServicesEffector as ServicesEffector, useWbxActor as useMicrobitActor,
-    BoundCallback,
+    WbxContextProvider, WbxCustomEventCallback, WbxDeviceEffector, WbxServicesEffector, useWbxActor,
+    WbBoundCallback,
 
-    WbxDevice as MicrobitDevice,
-    MicrobitServices,
+    WbxDevice,
+    WbxServices,
 
     MicrobitAccelerometer,
     MicrobitButton,
@@ -33,4 +33,3 @@ export {
     MicrobitTemperature,
     MicrobitUart
 }
-export default WbxContextProvider;
