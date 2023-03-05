@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MicrobitButton, BoundCallback, CustomEventCallback } from 'weblueth-react';
+import { MicrobitButton, WbBoundCallback, WbxCustomEventCallback } from 'weblueth-react';
 import { ButtonService, ButtonState } from 'microbit-web-bluetooth/types/services/button';
 
 type Props = {
@@ -9,14 +9,14 @@ type Props = {
 export default function MicrobitButtonState(props: Props) {
     const [state, setState] = useState<ButtonState | '-'>('-');
 
-    const handler: CustomEventCallback<ButtonState> = event => {
+    const handler: WbxCustomEventCallback<ButtonState> = event => {
         console.log("onButton(A|B)StateChanged:", event.detail);
         setState(event.detail);
     };
     const onButtonAStateChanged = props.button === 'a' ? handler : undefined;
     const onButtonBStateChanged = props.button === 'b' ? handler : undefined;
 
-    const onServiceBound: BoundCallback<ButtonService> = async bound => {
+    const onServiceBound: WbBoundCallback<ButtonService> = async bound => {
         // NOTE: ButtonState.Release = 0
         // setState(bound.binding ? 0 : '-');
         if (bound.binding) {
