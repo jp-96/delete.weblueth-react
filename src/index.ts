@@ -4,18 +4,18 @@ import { WbxContextProvider, WbxCustomEventCallback, WbxDeviceEffector, WbxServi
 import { WbxDevice } from './wbx/WbxDevice';
 import { WbxServices } from './wbx/WbxServices';
 
-import {MicrobitContextProvider} from './components/MicrobitContextProvider';
+import {MicrobitContextProvider} from './ubit/MicrobitContextProvider';
 
-import { MicrobitAccelerometer } from './components/MicrobitAccelerometer';
-import { MicrobitButton } from './components/MicrobitButton';
-import { MicrobitDeviceInformation } from './components/MicrobitDeviceInformation';
-import { MicrobitDfuControl } from './components/MicrobitDfuControl';
-import { MicrobitEvent } from './components/MicrobitEvent';
-import { MicrobitIoPin } from './components/MicrobitIoPin';
-import { MicrobitLed } from './components/MicrobitLed';
-import { MicrobitMagnetometer } from './components/MicrobitMagnetometer';
-import { MicrobitTemperature } from './components/MicrobitTemperature';
-import { MicrobitUart } from './components/MicrobitUart';
+import { MicrobitAccelerometer } from './ubit/MicrobitAccelerometer';
+import { MicrobitButton } from './ubit/MicrobitButton';
+import { MicrobitDeviceInformation } from './ubit/MicrobitDeviceInformation';
+import { MicrobitDfuControl } from './ubit/MicrobitDfuControl';
+import { MicrobitEvent } from './ubit/MicrobitEvent';
+import { MicrobitIoPin } from './ubit/MicrobitIoPin';
+import { MicrobitLed } from './ubit/MicrobitLed';
+import { MicrobitMagnetometer } from './ubit/MicrobitMagnetometer';
+import { MicrobitTemperature } from './ubit/MicrobitTemperature';
+import { MicrobitUart } from './ubit/MicrobitUart';
 
 export {
     WbBoundCallback,
