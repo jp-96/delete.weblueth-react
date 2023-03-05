@@ -1,8 +1,8 @@
 import React, { EffectCallback } from 'react';
 import { State } from 'xstate'; // yarn add --dev xstate
 import { createActorContext } from '@xstate/react'; // yarn add --dev @xstate/react
-import { createContext, machineWithoutContext } from '../statemachine/Machine';
-import { Connection, Context, BoundCallback, GetServices, RequestDevice, CustomServices } from '../statemachine/Context';
+import { createContext, machineWithoutContext } from '../wb/WbMachine';
+import { Connection, Context, BoundCallback, GetServices, RequestDevice, CustomServices } from '../wb/WbContext';
 
 const MicrobitActorContext = createActorContext(machineWithoutContext);
 

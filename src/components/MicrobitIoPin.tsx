@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { CustomEventCallback, ServiceProps } from '../context/MicrobitContext';
-import { BoundCallback } from '../statemachine/Context';
-import { MicrobitServices } from '../context/MicroBitServices';
+import { CustomEventCallback, ServiceProps } from '../wbx/WbxContext';
+import { BoundCallback } from '../wb/WbContext';
+import { MicrobitServices } from '../wbx/WbxServices';
 import { IoPinService } from 'microbit-web-bluetooth/types/services/io-pin';
 import { Services } from 'microbit-web-bluetooth';
 

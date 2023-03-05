@@ -1,5 +1,5 @@
 import { assign, createMachine, DoneInvokeEvent } from "xstate"; // yarn add --dev xstate
-import { Connection, Context, DisconnectedReason, RejectedReason } from "./Context";
+import { Connection, Context, DisconnectedReason, RejectedReason } from "./WbContext";
 
 const rejectedReason: RejectedReason = { type: "NONE", message: "" };
 const disconnectedReason: DisconnectedReason = { type: "NONE", message: "" };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { CustomEventCallback, ServiceProps } from '../context/MicrobitContext';
-import { BoundCallback } from '../statemachine/Context';
-import { MicrobitServices } from '../context/MicroBitServices';
+import { CustomEventCallback, ServiceProps } from '../wbx/WbxContext';
+import { BoundCallback } from '../wb/WbContext';
+import { MicrobitServices } from '../wbx/WbxServices';
 import { MagnetometerService } from 'microbit-web-bluetooth/types/services/magnetometer';
 import { Services } from 'microbit-web-bluetooth';
 

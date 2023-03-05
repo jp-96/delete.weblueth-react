@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
-import { BoundCallback, CustomServices } from '../statemachine/Context';
-import { ServicesEffector, useMicrobitActor } from './MicrobitContext';
+import { BoundCallback, CustomServices } from '../wb/WbContext';
+import { ServicesEffector, useMicrobitActor } from './WbxContext';
 
 interface Props {
     //children?: any;
