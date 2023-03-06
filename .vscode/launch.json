@@ -5,35 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "command": "yarn test",
-            "name": "Test",
+            "command": "yarn start:example",
+            "name": "start:example",
             "request": "launch",
             "type": "node-terminal",
             "resolveSourceMapLocations": [
                 "${workspaceFolder}/**",
                 "!**/node_modules/**",
             ],
-        },
-        {
-            "command": "yarn start-example",
-            "name": "Start example",
-            "request": "launch",
-            "type": "node-terminal",
-            "resolveSourceMapLocations": [
-                "${workspaceFolder}/**",
-                "!**/node_modules/**",
-            ],
-        },
-        {
-            "command": "yarn start",
-            "name": "Start example2",
-            "request": "launch",
-            "type": "node-terminal",
-            "resolveSourceMapLocations": [
-                "${workspaceFolder}/example2/**",
-                "!**/node_modules/**",
-            ],
-            "cwd": "${workspaceFolder}/example2",
         },
     ]
 }
